@@ -24,12 +24,12 @@ return (
     <div className="flex flex-col items-center bg-gray-100">
         <img className="w-screen" src={logo} alt="" srcset=""/>
         <img className="w-screen" src={banner} alt="" srcset=""/>
-        <div className='w-2/3 bg-white px-5 mt-8 rounded-md pt-2 mb-5'>
-          <div className='px-1'>
+        <div className='md:w-2/3 bg-white md:px-5 mt-8 rounded-md pt-2 mb-5'>
+          <div className='px-3'>
             El paquete correspondiente al código: <b>CO-7183440177</b> se encuentra en estado: <b>ESTADO EN ESPERA</b>. Para liberar el paquete debe actualizar los datos de envios y realizar el pago de <b>IMPUESTOS ADUANEROS</b> por un valor de: <b>$9.650 COP</b>
           </div>
           <div className='bg-slate-200 p-4 border '>
-            <button onClick={()=>UpdateBtn()} className='bg-orange-600 text-white w-full py-3 hover:underline rounded-md'>
+            <button onClick={()=>UpdateBtn()} className='text-xs md:text-base bg-orange-600 text-white w-full py-3 hover:underline rounded-md'>
               Actualizar información personal
             </button>
           </div>
