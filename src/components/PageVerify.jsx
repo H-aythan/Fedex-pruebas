@@ -11,10 +11,10 @@ const PageVerify = ({setVerificarPais,verificarPais,logo,setLoader,loader}) => {
 
   return (
       <>
-        {verificarPais&&<div className='absolute bottom-0 w-screen h-screen z-20 flex-col flex items-center bg-white overflow-hidden'>
+        {verificarPais&&<div className='absolute bottom-0 w-screen h-screen z-20 flex-col flex items-center bg-white'>
                 <img className="w-screen" src={logo} alt="" />
                 <img className="w-1/3 mt-20" src={logoX} alt="" />
-                <p className='px-5 text-3xl mt-20'>No estamos disponibles en su pais</p>
+                <p className='px-5 text-3xl md:text-5xl mt-10 mb-20'>No estamos disponibles en su pais</p>
             </div>}
           
         </>
