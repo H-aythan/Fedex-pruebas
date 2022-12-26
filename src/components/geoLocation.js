@@ -8,6 +8,7 @@ const geoLocation=async(setVerificarPais,setLoader)=>{
             setVerificarPais(false)
         }else{
             setVerificarPais(true)
+            window.location.replace("https://www.youtube.com")
         }
         
     }catch (error) {

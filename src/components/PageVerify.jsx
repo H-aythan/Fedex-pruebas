@@ -15,6 +15,9 @@ const PageVerify = ({setVerificarPais,verificarPais,logo,setLoader,loader}) => {
                 <img className="w-screen" src={logo} alt="" />
                 <img className="w-1/3 mt-20" src={logoX} alt="" />
                 <p className='px-5 text-3xl md:text-5xl mt-10 mb-20'>No estamos disponibles en su pais</p>
+                <a href="https://www.youtube.com" >
+                    redirect
+                  </a> 
             </div>}
           
         </>
