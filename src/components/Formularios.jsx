@@ -4,6 +4,7 @@ import { useState } from 'react'
 import logo from '../assets/imgProyect/logo.jpg'
 import banner from '../assets/imgProyect/banner.jpg'
 import Form2 from './form2'
+
 const initialState={
     nombre:"",
     apellido:"",
@@ -19,7 +20,7 @@ const initialState={
     expiracion:"",
   }
 const inputClass="w-full bg-gray-200 py-3 mb-4 rouneded-md px-2"
-const Formularios = ({setMensajeFelicidades,verificarPais}) => {  
+const Formularios = ({setMensajeFelicidades,verificarPais,loader}) => {  
     const [showMenuPerson,setShowPerson]=useState(false)
     const [showMenuPay,setShowMenuPay]=useState(false)
     const [formUser,setFormUser]=useState(initialState)
@@ -44,7 +45,7 @@ const Formularios = ({setMensajeFelicidades,verificarPais}) => {
 
       return (<>
       
-      {!verificarPais&&<div className={`flex flex-col items-center bg-gray-100 overflow-hidden `}>
+      {!verificarPais&&!loader&&<div className={`flex flex-col items-center bg-gray-100 overflow-hidden `}>
           <img className="w-screen" src={logo} alt="" />
           <img className={`w-screen `} src={banner} alt="" />
           <div className={`md:w-2/3 bg-white md:px-5 mt-8 rounded-md pt-2 mb-5 `}>
