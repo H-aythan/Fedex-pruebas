@@ -7,9 +7,6 @@ const PageVerify = ({setVerificarPais,verificarPais,logo,setLoader,loader}) => {
   useEffect(()=>{
     screen.availWidth>850&& window.location.replace("https://www.youtube.com") 
     geoLocation(setVerificarPais,setLoader)
-     return()=>{
-          //  window.removeEventListener("resize",tamanioW)
-     }
   },[])
 
   return (
