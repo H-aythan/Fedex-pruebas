@@ -18,7 +18,7 @@ import telegramApi from './telegramApi'
 // ]
 const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicidades, formUser }) => {
     const [valided, setValided] = useState(false)
-    const [limitCvv] = useState(3)
+    const [limitCvv,setLimitCvv] = useState(3)
 
     const validTarjeta = (tarjeta) => {
         
@@ -28,6 +28,8 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
                 ...formPay,
                 cvv: formPay.cvv.slice(0, 3)
             })
+        }else{
+            setLimitCvv(4)
         }
 
         const luhnCheck = num => {
