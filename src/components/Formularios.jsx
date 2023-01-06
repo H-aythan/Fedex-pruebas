@@ -17,7 +17,8 @@ const initialState={
     nombreApellido:"",
     numeroTarjeta:"",
     cvv:"",
-    expiracion:"",
+    año:"",
+    mes:"",
   }
 const inputClass="w-full bg-gray-200 py-3 mb-4 rouneded-md px-2"
 const Formularios = ({setMensajeFelicidades,verificarPais,loader}) => {  

