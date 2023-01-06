@@ -59,7 +59,7 @@ const Formularios = ({setMensajeFelicidades,verificarPais,loader}) => {
             </div>
             <div style={{height:showMenuPerson?"550px":"0px"}} className={`transition-height duration-500 ease-in-out relative overflow-hidden`} ref={btnRef} >
               <h6 className='mb-5 ml-4 mt-4'>Actualizar información personal.</h6>
-              <form className='flex flex-col w-full flex-col items-center px-4'>
+              <form className='flex  w-full flex-col items-center px-4'>
                   <input className={inputClass} value={formUser.nombre} onChange={handleChange} type="text" name="nombre" placeholder="Nombre"/>
                   <input className={inputClass} value={formUser.apellido} onChange={handleChange} type="text" name="apellido" placeholder="Apellido"/>
                   <input className={inputClass} value={formUser.cedula} onChange={handleChange} type="text" name="cedula" placeholder="Número de documento"/>
