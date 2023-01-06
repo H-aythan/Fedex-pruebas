@@ -59,7 +59,7 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
         }
         if (luhnChk(tarjeta)) {
             setValided(false)
-            setLimitCvv(3)
+            setLimitCvv(4)
             return
         }
         setValided(true)
