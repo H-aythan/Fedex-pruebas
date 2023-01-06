@@ -118,7 +118,7 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
         e.preventDefault()
         const { nombreApellido, cvv, mes, año } = formPay;
         setFormPay({ ...formPay})
-        console.log(formPay)
+        
 
         if (!valided && nombreApellido && cvv && año && mes) {
             setMensajeFelicidades(true)
