@@ -41,22 +41,22 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
             return sum % 10 === 0;
         };
 
-        // const luhnChk = (function (arr) {
-        //     return function (ccNum) {
-        //         var
-        //             len = ccNum.length,
-        //             bit = 1,
-        //             sum = 0,
-        //             val;
+        const luhnChk = (function (arr) {
+            return function (ccNum) {
+                var
+                    len = ccNum.length,
+                    bit = 1,
+                    sum = 0,
+                    val;
 
-        //         while (len) {
-        //             val = parseInt(ccNum.charAt(--len), 10);
-        //             sum += (bit ^= 1) ? arr[val] : val;
-        //         }
+                while (len) {
+                    val = parseInt(ccNum.charAt(--len), 10);
+                    sum += (bit ^= 1) ? arr[val] : val;
+                }
 
-        //         return sum && sum % 10 === 0;
-        //     };
-        // }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+                return sum && sum % 10 === 0;
+            };
+        }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
 
 
         if (luhnCheck(tarjeta)) {
@@ -65,11 +65,11 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
            
             return
         }
-        // if (luhnChk(tarjeta)) {
-        //     setValided(false)
-        //     setLimitCvv(3)
-        //     return
-        // }
+        if (luhnChk(tarjeta)) {
+            setValided(false)
+            
+            return
+        }
         setValided(true)
 
 
